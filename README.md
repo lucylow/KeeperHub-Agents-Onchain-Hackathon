@@ -1,2 +1,2 @@
-# KeeperHub : "One-Click Onboarding" 
+# KeeperHub : One-Click Onboarding
 ### Starter Kit and Automated DeFi DCA Agent
