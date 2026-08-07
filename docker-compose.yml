@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  kgb-backend:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - KEEPERHUB_API_KEY=${KEEPERHUB_API_KEY}
+      - KEEPERHUB_API_URL=https://api.keeperhub.com
+    restart: always

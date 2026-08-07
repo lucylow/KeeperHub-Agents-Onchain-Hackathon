@@ -1,0 +1,36 @@
+{
+  "name": "KGB-DCA-Swap",
+  "description": "Autonomous DCA Swap via Uniswap V3",
+  "triggers": [
+    {
+      "type": "schedule",
+      "cron": "0 0 * * *"
+    }
+  ],
+  "actions": [
+    {
+      "id": "uniswap-swap",
+      "type": "mcp",
+      "server": "uniswap",
+      "action": "swap-exact-input",
+      "params": {
+        "network": "8453",
+        "tokenIn": "USDC",
+        "tokenOut": "{{workflow.inputs.tokenOut}}",
+        "amount": "{{workflow.inputs.amount}}",
+        "slippageBps": "{{workflow.inputs.slippageBps}}"
+      }
+    },
+    {
+      "id": "audit-trail",
+      "type": "mcp",
+      "server": "audit",
+      "action": "record-audit",
+      "params": {
+        "txHash": "{{steps.uniswap-swap.txHash}}",
+        "status": "{{steps.uniswap-swap.status}}",
+        "details": "{{steps.uniswap-swap.result}}"
+      }
+    }
+  ]
+}
