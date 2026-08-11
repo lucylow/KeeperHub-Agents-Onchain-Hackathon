@@ -1,9 +1,7 @@
-# KeeperHub DCA Agent
-
-## Autonomous Dollar-Cost Averaging on Uniswap V3 via KeeperHub
-
+# KGB — KeeperHub Guard Bot
 ---
 
+[![KGB](https://img.shields.io/badge/KGB-KeeperHub%20Guard%20Bot-4ade80)](https://github.com/keeperhub-dca/dca-agent)
 [![KeeperHub](https://img.shields.io/badge/KeeperHub-Execution%20Layer-4ade80)](https://keeperhub.com)
 [![Hackathon](https://img.shields.io/badge/KeeperHub-Agents%20Onchain-4ade80)](https://dorahacks.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -11,26 +9,32 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![ElizaOS](https://img.shields.io/badge/ElizaOS-1.7.2-purple)](https://elizaos.ai)
 [![Base](https://img.shields.io/badge/Base-Mainnet-0052FF)](https://base.org)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)](https://docker.com)
 
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [What is KGB?](#what-is-kgb)
 - [Key Features](#key-features)
-- [Technical Architecture](#technical-architecture)
 - [Quick Start](#quick-start)
+- [Technical Architecture](#technical-architecture)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Running the Agent](#running-the-agent)
+- [Running KGB](#running-kgb)
 - [Dashboard](#dashboard)
-- [How It Works](#how-it-works)
+- [How KGB Works](#how-kgb-works)
 - [Architecture Deep Dive](#architecture-deep-dive)
+- [KeeperHub Surfaces Used](#keeperhub-surfaces-used)
+- [Reliability & Observability](#reliability--observability)
+- [ERC-8004 Audit Trail](#erc-8004-audit-trail)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
 - [Development](#development)
 - [Testing](#testing)
 - [Contributing](#contributing)
+- [Hackathon Submission](#hackathon-submission)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
@@ -38,9 +42,9 @@
 
 ## Overview
 
-### What Is This Project?
+### What Is KGB?
 
-The **KeeperHub DCA Agent** is a production‑ready, autonomous AI agent that executes **Dollar‑Cost Averaging (DCA)** swaps on **Uniswap V3** via **KeeperHub's execution layer**. It is built on **ElizaOS** and demonstrates how AI agents can reliably execute on‑chain transactions with:
+**KGB — KeeperHub Guard Bot** is a production‑ready, autonomous AI agent that executes **Dollar‑Cost Averaging (DCA)** swaps on **Uniswap V3** via **KeeperHub's execution layer**. It is built on **ElizaOS** and demonstrates how AI agents can reliably execute on‑chain transactions with:
 
 - **Guaranteed execution** — automatic retries with exponential backoff
 - **Smart gas estimation** — dynamic pricing that adapts to congestion
@@ -49,11 +53,21 @@ The **KeeperHub DCA Agent** is a production‑ready, autonomous AI agent that ex
 - **Autonomous payments** — x402/MPP protocol support
 - **One‑command setup** — from zero to first transaction in <5 minutes
 
-### Why This Matters
+### Why KGB?
+
+| Letter | Meaning | Why It Matters |
+|--------|---------|----------------|
+| **K** | **KeeperHub** | The execution layer that makes autonomous on-chain execution possible |
+| **G** | **Guard** | Protecting your transactions from failure, MEV, and gas spikes |
+| **B** | **Bot** | The autonomous AI agent that does the work |
+
+**KGB** is the **guardian of autonomous on-chain execution** — turning AI agent decisions into guaranteed on‑chain transactions.
+
+### The Problem KGB Solves
 
 AI agents are increasingly capable of reasoning and decision‑making, but they traditionally hit a wall when they need to actually move value on‑chain. Failed transactions, gas spikes, MEV extraction, and lack of observability have prevented agents from becoming truly autonomous economic participants.
 
-**KeeperHub solves the "last mile" problem** — it turns agent decisions into guaranteed on‑chain execution.
+**KGB solves the "last mile" problem** — it turns agent decisions into guaranteed on‑chain execution through KeeperHub's execution layer.
 
 ### The Agent Economy Context
 
@@ -81,6 +95,43 @@ This project sits at the intersection of three massive trends:
 
 ---
 
+## What is KGB?
+
+### The Name
+
+**KGB** stands for **KeeperHub Guard Bot** — a name that captures the project's core mission:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│   ██╗  ██╗ ██████╗ ██████╗    ██████╗  █████╗ ██████╗    ██████╗  ██████╗ ████████╗│
+│   ██║ ██╔╝██╔════╝██╔════╝    ██╔══██╗██╔══██╗██╔══██╗   ██╔══██╗██╔═══██╗╚══██╔══╝│
+│   █████╔╝ ██║     ██║  ███╗    ██████╔╝███████║██████╔╝   ██████╔╝██║   ██║   ██║   │
+│   ██╔═██╗ ██║     ██║   ██║    ██╔══██╗██╔══██║██╔══██╗   ██╔══██╗██║   ██║   ██║   │
+│   ██║  ██╗╚██████╗╚██████╔╝    ██████╔╝██║  ██║██████╔╝   ██████╔╝╚██████╔╝   ██║   │
+│   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝     ╚═════╝ ╚═╝  ╚═╝╚═════╝    ╚═════╝  ╚═════╝    ╚═╝   │
+│                                                                             │
+│            KEEPERHUB GUARD BOT — Autonomous DCA Execution                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Why the Name Works
+
+The name **KGB** is:
+
+1. **Memorable** — Three letters are easy to remember and share
+2. **Impactful** — The historical association with "guardians" and "protection" aligns with the project's mission
+3. **Descriptive** — Each letter has meaning tied to the project
+4. **Brandable** — Short, punchy, and visually striking for logos and badges
+5. **Conversation Starter** — The name naturally invites questions about what it stands for
+
+### KGB Tagline
+
+> **"Guardian of Autonomous On-Chain Execution"**
+
+---
+
 ## Key Features
 
 ### 🚀 Zero‑to‑First‑Transaction in <5 Minutes
@@ -100,7 +151,7 @@ curl -fsSL https://keeperhub.io/starter.sh | bash
 - **Verifiable transaction hashes** — viewable on BaseScan
 - **Full execution lifecycle** — from intent to on‑chain confirmation
 
-### 🛡️ Reliability Guarantees
+### 🛡️ KGB Reliability Guarantees
 
 - **Exponential backoff retries** — survives network congestion
 - **Smart gas estimation** — automatically adapts to market conditions
@@ -122,7 +173,7 @@ curl -fsSL https://keeperhub.io/starter.sh | bash
 
 ### 📊 Dashboard
 
-- **Real‑time status monitoring** — agent running state
+- **Real‑time status monitoring** — KGB running state
 - **Execution history** — with transaction links
 - **Performance metrics** — success rate, gas usage
 - **Configuration management** — change DCA parameters
@@ -132,7 +183,7 @@ curl -fsSL https://keeperhub.io/starter.sh | bash
 
 - **Custom plugin** — 6 actions available to the agent
 - **Providers** — wallet and history data in context
-- **Natural language** — interact with the agent in plain English
+- **Natural language** — interact with KGB in plain English
 
 ### 🔧 Developer Experience
 
@@ -140,212 +191,6 @@ curl -fsSL https://keeperhub.io/starter.sh | bash
 - **Comprehensive documentation** — 15+ pages
 - **Test coverage** — unit and integration tests
 - **Open source** — MIT licensed
-
----
-
-## Technical Architecture
-
-### System Architecture Diagram
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              USER / DEVELOPER                              │
-│                                                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    CLI Setup (One Command)                          │  │
-│  │  curl -fsSL https://keeperhub.io/starter.sh | bash                 │  │
-│  └────────────────────────────┬─────────────────────────────────────────┘  │
-│                               │                                             │
-│                               ▼                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    ElizaOS Agent Framework                          │  │
-│  │  ┌──────────────────────────────────────────────────────────────┐  │  │
-│  │  │                    DCA Agent Logic                           │  │  │
-│  │  │  • Schedule management (cron/block-based)                   │  │  │
-│  │  │  • Balance verification                                     │  │  │
-│  │  │  • Price checking (optional oracle)                         │  │  │
-│  │  │  • Execution triggering                                     │  │  │
-│  │  └──────────────────────────────────────────────────────────────┘  │  │
-│  └────────────────────────────┬─────────────────────────────────────────┘  │
-│                               │                                             │
-│                               ▼                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    @keeperhub/wallet Client                         │  │
-│  │  • call_workflow (MCP tool)                                        │  │
-│  │  • Auto-detects x402 vs MPP                                        │  │
-│  │  • Signs payments via Turnkey TEE                                  │  │
-│  │  • Records ERC-8004 feedback                                       │  │
-│  └────────────────────────────┬─────────────────────────────────────────┘  │
-│                               │                                             │
-└───────────────────────────────┼─────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          KEEPERHUB PLATFORM                                │
-│                                                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    MCP Server (JSON-RPC 2.0)                        │  │
-│  │  • list_workflows                                                   │  │
-│  │  • call_workflow (workflow-slug binding)                           │  │
-│  │  • ~20+ workflow tools                                              │  │
-│  └────────────────────────────┬─────────────────────────────────────────┘  │
-│                               │                                             │
-│                               ▼                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    KeeperHub Execution Engine                       │  │
-│  │  • Smart Gas Estimation + Exponential Backoff                      │  │
-│  │  • Private Routing (MEV protection)                                │  │
-│  │  • Turnkey TEE signing                                             │  │
-│  │  • Multi-RPC failover                                              │  │
-│  └────────────────────────────┬─────────────────────────────────────────┘  │
-│                               │                                             │
-│                               ▼                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    Settlement Layer                                 │  │
-│  │  • Uniswap V3 SwapRouter02 (Base mainnet)                          │  │
-│  │  • ERC-8004 ReputationRegistry (audit trail)                       │  │
-│  │  • 0G Storage (optional audit persistence)                         │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Data Flow: DCA Execution Cycle
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         DCA EXECUTION CYCLE                                │
-│                                                                             │
-│  Phase 1: Schedule Trigger                                                  │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  • Cron job or block-based trigger fires                           │   │
-│  │  • Agent wakes up and checks schedule                              │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                               │                                             │
-│                               ▼                                             │
-│  Phase 2: Pre-Execution Checks                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  • Verify wallet balance (USDC)                                    │   │
-│  │  • Check allowance (approve if needed)                             │   │
-│  │  • Fetch current price (optional)                                  │   │
-│  │  • Validate execution conditions                                   │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                               │                                             │
-│                               ▼                                             │
-│  Phase 3: KeeperHub Execution                                               │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  • Agent calls KeeperHub MCP with workflow slug                    │   │
-│  │  • @keeperhub/wallet handles 402 payment challenge                 │   │
-│  │  • Auto-selects x402 or MPP based on server                        │   │
-│  │  • Signs payment via Turnkey TEE                                   │   │
-│  │  • KeeperHub executes with gas optimization + retries              │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                               │                                             │
-│                               ▼                                             │
-│  Phase 4: Settlement                                                        │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  • Uniswap V3 swap executes on Base mainnet                        │   │
-│  │  • Transaction confirms                                             │   │
-│  │  • ERC-8004 audit trail recorded                                    │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                               │                                             │
-│                               ▼                                             │
-│  Phase 5: Post-Execution                                                    │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  • Log execution result (success/failure)                          │   │
-│  │  • Store transaction hash                                           │   │
-│  │  • Send Telegram/Discord notification                               │   │
-│  │  • Record ERC-8004 feedback                                         │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Component Interaction Diagram
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           COMPONENT INTERACTIONS                                │
-│                                                                                 │
-│  ┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────────┐  │
-│  │    User     │────▶│   CLI       │────▶│   KeeperHub Setup Script       │  │
-│  │  (Developer)│     │  (setup.sh) │     │   (Auto-provisions wallet)     │  │
-│  └─────────────┘     └─────────────┘     └─────────────────────────────────┘  │
-│                                                                                 │
-│  ┌─────────────┐     ┌─────────────────────────────────────────────────────────┐│
-│  │   User      │────▶│                    ElizaOS Agent                       ││
-│  │  (Operator) │     │  ┌─────────────┐  ┌─────────────────────────────────┐ ││
-│  └─────────────┘     │  │  DCA Agent  │──│  KeeperHub Plugin (6 actions)   │ ││
-│                      │  │  Logic      │  └─────────────────────────────────┘ ││
-│                      │  └─────────────┘  ┌─────────────────────────────────┐ ││
-│                      │                   │  Providers (wallet, history)    │ ││
-│                      │                   └─────────────────────────────────┘ ││
-│                      └─────────────────────────────────────────────────────────┘│
-│                                              │                                  │
-│                                              ▼                                  │
-│  ┌─────────────┐     ┌─────────────────────────────────────────────────────────┐│
-│  │  Dashboard  │◀────│                    @keeperhub/wallet                    ││
-│  │  (Web UI)   │     │  • call_workflow   • balance   • info   • feedback     ││
-│  └─────────────┘     └─────────────────────────────────────────────────────────┘│
-│                                              │                                  │
-│                                              ▼                                  │
-│  ┌─────────────┐     ┌─────────────────────────────────────────────────────────┐│
-│  │  BaseScan   │◀────│                    KeeperHub API                        ││
-│  │  (Explorer) │     │  • MCP Server (JSON-RPC)                               ││
-│  └─────────────┘     │  • Execution Engine (gas + retries + MEV)             ││
-│                      │  • Settlement Layer (Uniswap V3 + ERC-8004)           ││
-│                      └─────────────────────────────────────────────────────────┘│
-│                                              │                                  │
-│                                              ▼                                  │
-│                      ┌─────────────────────────────────────────────────────────┐│
-│                      │                    Base Mainnet                         ││
-│                      │  • Uniswap V3 SwapRouter02                             ││
-│                      │  • ERC-8004 ReputationRegistry                         ││
-│                      └─────────────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Directory Structure
-
-```
-keeperhub-dca-agent/
-├── .env.example                 # Environment variables template
-├── .gitignore                   # Git ignore file
-├── package.json                 # NPM dependencies
-├── tsconfig.json                # TypeScript configuration
-├── setup.sh                     # One-command setup script
-├── README.md                    # This file
-├── character.json               # ElizaOS character definition
-├── workflows/
-│   └── dca-workflow.json        # KeeperHub workflow definition
-├── src/
-│   ├── index.ts                 # Main entry point
-│   ├── agent.ts                 # DCA agent core logic
-│   ├── config.ts                # Configuration management
-│   ├── dashboard.ts             # Web dashboard server
-│   ├── notifications.ts         # Telegram/Discord notifications
-│   ├── types.ts                 # TypeScript type definitions
-│   ├── utils.ts                 # Utility functions
-│   └── elizaos/
-│       ├── index.ts             # ElizaOS exports
-│       ├── runtime.ts           # ElizaOS runtime wrapper
-│       ├── plugin.ts            # Main plugin definition
-│       ├── character.ts         # Character definition
-│       ├── actions/
-│       │   ├── swap.ts          # Execute a swap
-│       │   ├── balance.ts       # Get wallet balance
-│       │   ├── history.ts       # Get execution history
-│       │   └── manual.ts        # Trigger manual execution
-│       └── providers/
-│           ├── walletProvider.ts # Injects wallet address + balance
-│           └── historyProvider.ts # Injects recent executions
-├── tests/
-│   ├── agent.test.ts            # Agent unit tests
-│   ├── elizaos.test.ts          # ElizaOS plugin tests
-│   └── integration.test.ts      # Integration tests
-└── docs/
-    ├── api.md                   # API documentation
-    ├── troubleshooting.md       # Troubleshooting guide
-    └── wallet-funding.md        # Wallet funding guide
-```
 
 ---
 
@@ -359,7 +204,7 @@ curl -fsSL https://keeperhub.io/starter.sh | bash
 
 This will:
 1. ✅ Check prerequisites (Node.js 20+, npm, git)
-2. ✅ Clone the repository
+2. ✅ Clone the KGB repository
 3. ✅ Install all dependencies
 4. ✅ Auto‑detect your agent framework
 5. ✅ Create `.env` with guided prompts
@@ -371,7 +216,7 @@ This will:
 ### Manual Setup
 
 ```bash
-# Clone the repository
+# Clone the KGB repository
 git clone https://github.com/keeperhub-dca/dca-agent.git
 cd dca-agent
 
@@ -383,8 +228,201 @@ chmod +x setup.sh
 
 # Follow the prompts to configure your environment
 
-# Start the agent
+# Start KGB
 npm start
+```
+
+### Docker Setup
+
+```bash
+# Build the Docker image
+docker build -t kgb-agent .
+
+# Run the container
+docker run -d \
+  --name kgb-agent \
+  -p 3000:3000 \
+  --env-file .env \
+  kgb-agent
+```
+
+---
+
+## Technical Architecture
+
+### System Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "User/Developer"
+        CLI[CLI Setup<br/>./setup.sh]
+    end
+
+    subgraph "Agent Layer"
+        ELIZA[ElizaOS Agent]
+        KGB[KGB Logic<br/>DCA Strategy]
+        PLUGIN[KeeperHub Plugin]
+        PROVIDERS[Providers]
+    end
+
+    subgraph "KeeperHub Layer"
+        MCP[MCP Server<br/>JSON-RPC 2.0]
+        WALLET[@keeperhub/wallet]
+        X402[x402/MPP<br/>Auto-Detection]
+        TEE[Turnkey TEE<br/>Signing]
+        ENGINE[Execution Engine<br/>Gas + Retries + MEV]
+    end
+
+    subgraph "Settlement Layer"
+        UNISWAP[Uniswap V3<br/>SwapRouter02]
+        ERC8004[ERC-8004<br/>ReputationRegistry]
+        ZEROG[0G Storage<br/>Audit Persistence]
+        BASESCAN[BaseScan<br/>Verification]
+    end
+
+    subgraph "Blockchain"
+        BASE[Base Mainnet<br/>Chain ID: 8453]
+    end
+
+    CLI --> ELIZA
+    ELIZA --> KGB
+    KGB --> PLUGIN
+    PLUGIN --> PROVIDERS
+    PROVIDERS --> MCP
+    MCP --> WALLET
+    WALLET --> X402
+    WALLET --> TEE
+    X402 --> ENGINE
+    TEE --> ENGINE
+    ENGINE --> UNISWAP
+    ENGINE --> ERC8004
+    ENGINE --> ZEROG
+    UNISWAP --> BASE
+    ERC8004 --> BASE
+    ZEROG --> BASESCAN
+    BASESCAN --> BASE
+```
+
+### KGB Execution Cycle Diagram
+
+```mermaid
+graph LR
+    subgraph "Phase 1: Schedule Trigger"
+        CRON[Cron Job] --> WAKE[KGB Wakes]
+        WAKE --> CHECK[Check Schedule]
+    end
+
+    subgraph "Phase 2: Pre-Execution Checks"
+        CHECK --> BALANCE[Balance Verification]
+        BALANCE --> ALLOWANCE[Allowance Check]
+        ALLOWANCE --> PRICE[Price Fetch]
+        PRICE --> VALIDATE[Validate Conditions]
+    end
+
+    subgraph "Phase 3: KeeperHub Execution"
+        VALIDATE --> MCP_CALL[MCP Call]
+        MCP_CALL --> PAYMENT[402 Payment<br/>x402/MPP Auto-Detection]
+        PAYMENT --> SIGN[Turnkey TEE<br/>Signing]
+        SIGN --> EXECUTE[KeeperHub Execution<br/>Gas + Retries + MEV]
+    end
+
+    subgraph "Phase 4: Settlement"
+        EXECUTE --> SWAP[Uniswap V3<br/>SwapRouter02]
+        SWAP --> CONFIRM[Transaction<br/>Confirmation]
+        CONFIRM --> AUDIT[ERC-8004<br/>Audit Trail]
+    end
+
+    subgraph "Phase 5: Post-Execution"
+        AUDIT --> LOG[Logging]
+        LOG --> STORE[Storage]
+        STORE --> NOTIFY[Notifications]
+        NOTIFY --> FEEDBACK[ERC-8004<br/>Feedback]
+    end
+```
+
+### Component Interaction Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CLI as CLI (setup.sh)
+    participant KGB as KGB Agent
+    participant Logic as DCA Logic
+    participant Wallet as @keeperhub/wallet
+    participant MCP as MCP Server
+    participant Engine as Execution Engine
+    participant Uniswap as Uniswap V3
+    participant ERC as ERC-8004
+
+    User->>CLI: ./setup.sh
+    CLI->>Wallet: Auto-provision wallet
+    Wallet-->>CLI: Wallet address
+
+    User->>KGB: npm start
+    KGB->>Logic: Initialize
+
+    loop Every scheduled interval
+        Logic->>Logic: Check schedule
+        Logic->>Wallet: Check balance
+        Wallet-->>Logic: Balance OK
+        Logic->>Wallet: Check allowance
+        Wallet-->>Logic: Allowance OK
+
+        Logic->>MCP: call_workflow('uniswap-swap-exact-input')
+        MCP-->>Logic: 402 Payment Required
+        Logic->>Wallet: Handle 402 payment
+        Wallet->>Wallet: Auto-detect x402/MPP
+        Wallet->>Wallet: Sign via Turnkey TEE
+        Wallet->>MCP: Retry with payment
+
+        MCP->>Engine: Execute swap
+        Engine->>Engine: Smart gas + backoff
+        Engine->>Engine: Private MEV routing
+        Engine->>Uniswap: Swap USDC → ETH
+
+        Uniswap-->>Engine: Transaction confirmed
+        Engine-->>MCP: txHash + receipt
+        MCP-->>Logic: Execution result
+
+        Logic->>ERC: Record audit trail
+        ERC-->>Logic: Audit recorded
+
+        Logic->>User: Notification
+    end
+```
+
+### Data Flow Diagram
+
+```mermaid
+graph LR
+    subgraph "Data Sources"
+        CHAINLINK[Chainlink<br/>Price Feed]
+        UNISWAP_DATA[Uniswap<br/>Spot Price]
+        KEEPERHUB_DATA[KeeperHub<br/>Native Data]
+        ZEROG_DATA[0G Storage<br/>Audit Data]
+    end
+
+    subgraph "Data Processing"
+        AGGREGATE[Data Aggregator]
+        VALIDATE[Data Validator]
+        CACHE[Cache Layer]
+    end
+
+    subgraph "Data Consumers"
+        KGB[KGB Agent]
+        DASHBOARD[Dashboard]
+        AUDIT[Audit Trail]
+    end
+
+    CHAINLINK --> AGGREGATE
+    UNISWAP_DATA --> AGGREGATE
+    KEEPERHUB_DATA --> AGGREGATE
+    AGGREGATE --> VALIDATE
+    VALIDATE --> CACHE
+    CACHE --> KGB
+    CACHE --> DASHBOARD
+    KGB --> AUDIT
+    ZEROG_DATA --> AUDIT
 ```
 
 ---
@@ -401,7 +439,7 @@ npm start
 
 ### Detailed Installation Steps
 
-#### Step 1: Clone the Repository
+#### Step 1: Clone the KGB Repository
 
 ```bash
 git clone https://github.com/keeperhub-dca/dca-agent.git
@@ -421,7 +459,7 @@ cd dca-agent
 nano .env
 ```
 
-#### Step 4: Get Your API Key
+#### Step 4: Get Your KeeperHub API Key
 
 1. Go to [app.keeperhub.com](https://app.keeperhub.com)
 2. Sign in with Google, GitHub, or email
@@ -439,7 +477,7 @@ keeperhub-wallet status
 # Minimum: $10 USDC + $3 ETH
 ```
 
-#### Step 6: Start the Agent
+#### Step 6: Start KGB
 
 ```bash
 npm start
@@ -500,7 +538,7 @@ LOG_LEVEL=info
 
 ---
 
-## Running the Agent
+## Running KGB
 
 ### Start the Agent
 
@@ -529,10 +567,10 @@ npm run dashboard
 ### Expected Output
 
 ```
-🔷 KeeperHub DCA Agent v1.0.0
-================================
+🔷 KGB — KeeperHub Guard Bot v1.0.0
+====================================
 
-🚀 Starting KeeperHub DCA Agent...
+🚀 Starting KGB DCA Agent...
    📊 Schedule: weekly
    💰 Amount: 100 USDC → ETH
    ⛓️ Chain: base
@@ -549,7 +587,7 @@ npm run dashboard
 
 📊 Dashboard available at http://localhost:3000
 
-✅ KeeperHub DCA Agent is fully operational
+✅ KGB is fully operational
    Press Ctrl+C to stop
 ```
 
@@ -565,7 +603,7 @@ Open `http://localhost:3000` in your browser.
 
 #### 1. Status Overview
 
-- Agent running state (🟢 Running / 🔴 Stopped)
+- KGB running state (🟢 Running / 🔴 Stopped)
 - Total executions, success rate, failed executions
 - Real‑time connection status
 
@@ -573,7 +611,7 @@ Open `http://localhost:3000` in your browser.
 
 | Metric | Description |
 |--------|-------------|
-| **Total Executions** | Number of DCA cycles run |
+| **Total Executions** | Number of DCA cycles run by KGB |
 | **Successful** | Successful executions |
 | **Failed** | Failed executions |
 | **Success Rate** | Percentage of successful executions |
@@ -611,7 +649,7 @@ Open `http://localhost:3000` in your browser.
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/status` | GET | Agent status |
+| `/api/status` | GET | KGB agent status |
 | `/api/history` | GET | Execution history |
 | `/api/config` | GET | Current configuration |
 | `/api/config` | PUT | Update configuration |
@@ -621,13 +659,13 @@ Open `http://localhost:3000` in your browser.
 
 ---
 
-## How It Works
+## How KGB Works
 
 ### The DCA Execution Cycle
 
 #### Phase 1: Schedule Trigger
 
-The agent uses a cron‑based scheduler (node‑cron) to trigger executions according to the configured frequency:
+KGB uses a cron‑based scheduler (node‑cron) to trigger executions according to the configured frequency:
 
 | Frequency | Cron Expression | Execution Time |
 |-----------|-----------------|----------------|
@@ -637,7 +675,7 @@ The agent uses a cron‑based scheduler (node‑cron) to trigger executions acco
 
 #### Phase 2: Pre‑Execution Checks
 
-Before executing, the agent performs:
+Before executing, KGB performs:
 
 1. **Balance verification** — ensures sufficient USDC in the wallet
 2. **Allowance check** — verifies USDC approval for SwapRouter02
@@ -646,7 +684,7 @@ Before executing, the agent performs:
 
 #### Phase 3: KeeperHub Execution
 
-The agent calls KeeperHub's MCP server with the workflow slug:
+KGB calls KeeperHub's MCP server with the workflow slug:
 
 ```typescript
 await mcpClient.callTool('call_workflow', {
@@ -678,7 +716,7 @@ After execution:
 3. **Notification** — Telegram/Discord alert sent
 4. **Audit** — ERC‑8004 feedback recorded
 
-### Reliability Mechanisms
+### KGB Reliability Mechanisms
 
 #### Exponential Backoff Retry
 
@@ -729,45 +767,43 @@ Transactions are routed through private mempools:
 
 ### Component Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                        ARCHITECTURE OVERVIEW                                   │
-│                                                                                 │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                        1. FRONTEND LAYER                                 │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────────┐│ │
-│  │  │  Dashboard   │  │  CLI (setup) │  │  ElizaOS Agent                   ││ │
-│  │  │  (React/TS)  │  │  (bash/Node) │  │  (Custom Plugin + Providers)    ││ │
-│  │  └──────────────┘  └──────────────┘  └──────────────────────────────────┘│ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                          │                                      │
-│                                          ▼                                      │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                        2. APPLICATION LAYER                              │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────────┐│ │
-│  │  │  DCA Agent   │  │  Scheduler   │  │  Notification Service            ││ │
-│  │  │  (Node.js)   │  │  (node-cron) │  │  (Telegram/Discord)              ││ │
-│  │  └──────────────┘  └──────────────┘  └──────────────────────────────────┘│ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                          │                                      │
-│                                          ▼                                      │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                        3. KEEPERHUB LAYER                                │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────────┐│ │
-│  │  │  MCP Server  │  │  @keeperhub  │  │  ERC-8004 Reputation Registry    ││ │
-│  │  │  (JSON-RPC)  │  │  /wallet     │  │  (Audit Trail)                   ││ │
-│  │  └──────────────┘  └──────────────┘  └──────────────────────────────────┘│ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-│                                          │                                      │
-│                                          ▼                                      │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                        4. SETTLEMENT LAYER                               │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────────┐│ │
-│  │  │  Uniswap V3  │  │  Base        │  │  0G Storage (optional)           ││ │
-│  │  │  SwapRouter  │  │  Mainnet     │  │  (Audit Persistence)             ││ │
-│  │  └──────────────┘  └──────────────┘  └──────────────────────────────────┘│ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "1. Frontend Layer"
+        DASH[Dashboard<br/>React/TypeScript]
+        CLI[CLI<br/>bash/Node.js]
+        KGB_UI[KGB Agent<br/>ElizaOS Plugin]
+    end
+
+    subgraph "2. Application Layer"
+        KGB_CORE[KGB Core<br/>Node.js]
+        SCHED[Scheduler<br/>node-cron]
+        NOTIFY[Notification Service<br/>Telegram/Discord]
+    end
+
+    subgraph "3. KeeperHub Layer"
+        MCP[MCP Server<br/>JSON-RPC 2.0]
+        WALLET[@keeperhub/wallet]
+        ERC[ERC-8004<br/>ReputationRegistry]
+    end
+
+    subgraph "4. Settlement Layer"
+        UNISWAP[Uniswap V3<br/>SwapRouter02]
+        BASE[Base Mainnet]
+        ZEROG[0G Storage<br/>Optional]
+    end
+
+    DASH --> KGB_CORE
+    CLI --> KGB_CORE
+    KGB_UI --> KGB_CORE
+    KGB_CORE --> SCHED
+    KGB_CORE --> NOTIFY
+    KGB_CORE --> MCP
+    MCP --> WALLET
+    WALLET --> ERC
+    MCP --> UNISWAP
+    UNISWAP --> BASE
+    WALLET --> ZEROG
 ```
 
 ### Technology Stack
@@ -784,75 +820,249 @@ Transactions are routed through private mempools:
 
 ### Security Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                         SECURITY ARCHITECTURE                                  │
-│                                                                                 │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                    1. API KEY MANAGEMENT                               │   │
-│  │  • Agent holds API key (kh_), NOT private key                         │   │
-│  │  • API keys are scoped to specific permissions                        │   │
-│  │  • Keys can be revoked via KeeperHub dashboard                        │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                          │                                      │
-│                                          ▼                                      │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                    2. TURNKEY TEE SIGNING                              │   │
-│  │  • Private keys generated inside secure enclave                       │   │
-│  │  • Keys CANNOT be exported                                            │   │
-│  │  • Remote attestation verifies TEE integrity                          │   │
-│  │  • No private key in developer's environment                          │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                          │                                      │
-│                                          ▼                                      │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                    3. SPENDING LIMITS                                  │   │
-│  │  • Configurable per‑execution limit                                   │   │
-│  │  • Prevent excessive spending                                         │   │
-│  │  • Enforced at the wallet level                                       │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                          │                                      │
-│                                          ▼                                      │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                    4. MEV PROTECTION                                   │   │
-│  │  • Private mempool routing                                            │   │
-│  │  • Flashbots / Bloxroute integration                                  │   │
-│  │  • Prevents front‑running and sandwich attacks                        │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "1. API Key Management"
+        KEY[KGB holds API key<br/>kh_ prefix]
+        SCOPE[Scoped permissions]
+        REVOKE[Revocable via dashboard]
+    end
+
+    subgraph "2. Turnkey TEE Signing"
+        TEE[Private keys in secure enclave]
+        NOEXPORT[Keys cannot be exported]
+        ATTEST[Remote attestation]
+    end
+
+    subgraph "3. Spending Limits"
+        LIMIT[Configurable limits]
+        PER_EXEC[Per-execution limit]
+        DAILY[Daily spending cap]
+    end
+
+    subgraph "4. MEV Protection"
+        PRIVATE[Private mempool]
+        FLASHBOTS[Flashbots integration]
+        BLOXROUTE[Bloxroute relay]
+    end
+
+    KEY --> TEE
+    TEE --> LIMIT
+    LIMIT --> PRIVATE
+    PRIVATE --> FLASHBOTS
+    PRIVATE --> BLOXROUTE
 ```
 
-### ERC‑8004 Integration
+---
 
-KeeperHub is registered as **agent #31875** on the ERC‑8004 IdentityRegistry. The audit trail records:
+## KeeperHub Surfaces Used
 
-| Field | Description | On‑Chain |
-|-------|-------------|----------|
-| `executionId` | Unique execution ID | ✅ |
-| `txHash` | Transaction hash | ✅ |
-| `amount` | USDC swapped | ✅ (via metadata) |
-| `tokenOut` | Token received | ✅ (via metadata) |
-| `price` | Execution price | ✅ (via metadata) |
-| `timestamp` | Execution time | ✅ (block timestamp) |
-| `score` | Rating (0‑100) | ✅ |
-| `comment` | Optional comment | ✅ (hashed) |
+KGB uses **all six KeeperHub surfaces**:
+
+### 1. MCP Server
+
+KGB calls KeeperHub's MCP server via JSON‑RPC 2.0 with X‑API‑Key authentication. The MCP server exposes **~20 workflow tools** including:
+
+- `uniswap-swap-exact-input` — the primary tool for DCA execution
+- `uniswap-swap-exact-output` — alternative swap direction
+- `token-balance` — balance checking
+- `token-allowance` — allowance verification
+- `token-approve` — token approval
+
+**Implementation:**
+```typescript
+const result = await mcpClient.callTool('call_workflow', {
+  slug: 'uniswap-swap-exact-input',
+  params: {
+    network: '8453',
+    tokenIn: 'USDC',
+    tokenOut: 'ETH',
+    amountIn: '100000000',
+    slippageTolerance: 0.5,
+    recipient: walletAddress,
+  },
+});
+```
+
+### 2. CLI
+
+The `keeperhub-wallet` CLI provides one‑command installation:
+
+```bash
+npx -p @keeperhub/wallet keeperhub-wallet skill install
+```
+
+This **idempotently**:
+1. Writes the skill file into every detected agent's skills directory (Claude Code, Cursor, Windsurf, OpenCode auto‑detected)
+2. Registers the PreToolUse safety hook in `~/.claude/settings.json`
+3. Registers the stdio MCP server in each agent's MCP config
+
+On the very first tool call, the server **auto‑provisions a fresh wallet** into `~/.keeperhub/wallet.json` — **no manual add step**.
+
+### 3. x402 (Coinbase HTTP‑402 Payment Protocol)
+
+x402 is live on Base USDC with **~$24M/month in volume** as of early 2026, **~94k buyers** and **~22k sellers**. KeeperHub's x402 middleware runs on every `POST /mcp` and `GET /mcp` request.
+
+The `@keeperhub/wallet` client auto‑pays 402 responses:
+- Detects x402 from server headers
+- Signs payment through Turnkey TEE
+- Retries with signed payment
+
+### 4. MPP (Machine Payments Protocol)
+
+MPP launched alongside Stripe's Tempo chain on **March 18, 2026** and integrated **50+ services in its first week** — OpenAI, Anthropic, Google Gemini, Dune, Browserbase, Parallel Web Systems, WorkOS. **Visa joined as an anchor validator in April 2026**.
+
+The wallet **auto‑detects x402 vs MPP** based on what the server advertises.
+
+### 5. Workflow Builder
+
+KGB uses a pre‑published workflow (`uniswap-swap-exact-input`) that can be called by any MCP‑aware agent. The workflow is defined in `workflows/dca-workflow.json` and handles:
+
+- Balance verification
+- Allowance checking and approval
+- Swap execution via Uniswap V3
+- ERC‑8004 audit trail recording
+- Notification delivery
+
+### 6. Audit Trail (ERC‑8004 ReputationRegistry)
+
+KeeperHub is **registered as agent #31875** on the ERC‑8004 IdentityRegistry. The wallet records feedback via the ReputationRegistry:
+
+> *"Record ERC‑8004 ReputationRegistry feedback for a workflow execution this wallet paid for. Wallet pays gas (~$0.05–2 native ETH)."*
+
+Every execution produces an on‑chain, tamper‑evident audit record.
+
+---
+
+## Reliability & Observability
+
+### 1. Exponential Backoff Retry
+
+KeeperHub automatically retries failed transactions with **exponential backoff**:
+
+| Attempt | Delay | Total Time |
+|---------|-------|------------|
+| 1 | 1 second | 1 second |
+| 2 | 2 seconds | 3 seconds |
+| 3 | 4 seconds | 7 seconds |
+| 4 | 8 seconds | 15 seconds |
+| 5 | 16 seconds | 31 seconds |
+
+### 2. Smart Gas Estimation
+
+KeeperHub provides **hosted infrastructure** that handles RPC nodes, redundancy, and **Smart Gas estimation (automatic retries with exponential backoff)**. KGB never needs to manually calculate gas prices.
+
+### 3. Multi‑RPC Failover
+
+The system automatically switches between RPC endpoints to ensure **no single point of failure**.
+
+### 4. Private Routing / MEV Protection
+
+KeeperHub provides **MEV‑protected routing**:
+- Transactions routed through private mempools
+- Prevents front‑running and sandwich attacks
+- Critical for DCA orders where slippage matters
+
+### 5. Full Audit Trail
+
+Every execution records:
+
+- **Trigger** — what initiated the execution
+- **Simulation result** — what was expected
+- **Submitted transaction** — what was sent
+- **Gas used** — how much it cost
+- **Outcome** — success or failure
+- **Timestamp** — when it happened
+
+### 6. Dashboard Observability
+
+The web dashboard provides:
+
+- **Real‑time status** — KGB running state
+- **Execution history** — with transaction hashes
+- **Performance metrics** — success rate, gas usage
+- **Activity log** — real‑time events with filtering
+- **Audit trail viewer** — ERC‑8004 feedback records
+
+---
+
+## ERC-8004 Audit Trail
+
+### What Is ERC-8004?
+
+**ERC-8004** is Ethereum's **agent identity standard**, launched on mainnet on **January 29, 2026**. It establishes three core registries:
+
+1. **Identity Registry** — agent identity
+2. **Reputation Registry** — feedback and reputation
+3. **Validation Registry** — verification of agent capabilities
+
+As of early 2026, **70k+ agents have registered**, and over **45,000 agents** had self-registered by February 2026.
+
+### KeeperHub's ERC-8004 Integration
+
+KeeperHub is **registered as agent #31875** on the ERC-8004 IdentityRegistry. The wallet client records feedback via the ReputationRegistry:
+
+> *"Record ERC-8004 ReputationRegistry feedback for a workflow execution this wallet paid for. Wallet pays gas (~$0.05–2 native ETH)"*
+
+### Audit Trail Features
+
+The audit trail records every action:
+
+- **Trigger** — what initiated the execution
+- **Simulation result** — what was expected
+- **Submitted transaction** — what was sent
+- **Gas used** — how much it cost
+- **Outcome** — success or failure
+- **Timestamp** — when it happened
+
+### How ERC-8004 Provides Tamper-Evident Audit Trails
+
+ERC-8004 uses **Keccak256 hashing and immutable event logs** to create tamper-evident audit trails, enabling detection of:
+- Prompt injection
+- System prompt modification
+- Behavioral drift through metadata snapshots and hash verification
+
+### ERC-8004 Audit Record Schema
+
+```json
+{
+  "executionId": "kgb_exec_20260728_14_abc123",
+  "txHash": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+  "walletAddress": "0x1234...5678",
+  "swap": {
+    "tokenIn": "USDC",
+    "tokenOut": "ETH",
+    "amountIn": "100000000",
+    "amountOut": "0.0357142857142857",
+    "price": 2800.50
+  },
+  "erc8004TxHash": "0x5678...ef90",
+  "timestamp": "2026-07-28T14:23:15Z",
+  "metadata": {
+    "gasUsed": 150000,
+    "slippage": 0.005,
+    "rating": 5,
+    "comment": "KGB DCA execution successful"
+  }
+}
+```
 
 ---
 
 ## API Reference
 
-### Agent API
+### KGB Agent API
 
-#### `DCAAgent.start()`
+#### `KGBAgent.start()`
 
 Starts the DCA scheduler and begins automated executions.
 
 ```typescript
-const agent = new DCAAgent();
+const agent = new KGBAgent();
 await agent.start();
 ```
 
-#### `DCAAgent.stop()`
+#### `KGBAgent.stop()`
 
 Stops the DCA scheduler.
 
@@ -860,7 +1070,7 @@ Stops the DCA scheduler.
 agent.stop();
 ```
 
-#### `DCAAgent.executeDCA()`
+#### `KGBAgent.executeDCA()`
 
 Manually triggers a single DCA execution.
 
@@ -869,7 +1079,7 @@ const execution = await agent.executeDCA();
 console.log(execution.txHash);
 ```
 
-#### `DCAAgent.getHistory()`
+#### `KGBAgent.getHistory()`
 
 Returns the full execution history.
 
@@ -877,7 +1087,7 @@ Returns the full execution history.
 const history = agent.getHistory();
 ```
 
-#### `DCAAgent.getStatus()`
+#### `KGBAgent.getStatus()`
 
 Returns current agent status.
 
@@ -891,7 +1101,7 @@ const status = agent.getStatus();
 | Endpoint | Method | Description | Response |
 |----------|--------|-------------|----------|
 | `/` | GET | Dashboard HTML | HTML page |
-| `/api/status` | GET | Agent status | `AgentStatus` |
+| `/api/status` | GET | KGB status | `AgentStatus` |
 | `/api/history` | GET | Execution history | `DCAExecution[]` |
 | `/api/config` | GET | Current configuration | `DCAConfig` |
 | `/api/config` | PUT | Update configuration | `DCAConfig` |
@@ -948,7 +1158,7 @@ keeperhub-wallet balance
 
 **Cause:** USDC not approved for SwapRouter02.
 
-**Solution:** Auto‑approved by the agent. If manual:
+**Solution:** Auto‑approved by KGB. If manual:
 ```bash
 keeperhub-wallet call token-approve '{"token":"USDC","spender":"SwapRouter02","amount":"100000000"}'
 ```
@@ -979,7 +1189,7 @@ curl https://app.keeperhub.com/api/health
 | `💳 Payment required: X USDC` | Workflow requires payment | Auto‑handled by wallet |
 | `💰 Insufficient balance: X USDC` | Need more funds | Fund your wallet |
 | `⛽ Gas price X exceeds max` | Gas too high | Increase `DCA_MAX_GAS_PRICE` |
-| `🔓 Approval required` | Need to approve token spending | Auto‑approved by agent |
+| `🔓 Approval required` | Need to approve token spending | Auto‑approved by KGB |
 | `🌐 Network congestion` | Retrying with backoff | Wait |
 | `📊 Slippage exceeded` | Price moved too much | Increase `DCA_SLIPPAGE` |
 
@@ -1005,7 +1215,7 @@ curl https://app.keeperhub.com/api/health
 ### Setup
 
 ```bash
-# Clone the repository
+# Clone the KGB repository
 git clone https://github.com/keeperhub-dca/dca-agent.git
 cd dca-agent
 
@@ -1041,7 +1251,7 @@ npm run format
 ```
 src/
 ├── index.ts              # Main entry point
-├── agent.ts              # DCA agent core logic
+├── agent.ts              # KGB agent core logic
 ├── config.ts             # Configuration management
 ├── dashboard.ts          # Web dashboard
 ├── notifications.ts      # Telegram/Discord
@@ -1090,7 +1300,7 @@ npm run test:coverage
 
 ```
 tests/
-├── agent.test.ts          # DCA agent unit tests
+├── agent.test.ts          # KGB agent unit tests
 ├── elizaos.test.ts        # ElizaOS plugin tests
 ├── integration.test.ts    # Integration tests
 └── mocks/
@@ -1103,7 +1313,7 @@ tests/
 
 ### How to Contribute
 
-1. Fork the repository
+1. Fork the KGB repository
 2. Create a feature branch (`git checkout -b feature/amazing`)
 3. Make your changes
 4. Run tests (`npm test`)
@@ -1139,22 +1349,49 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
 ---
 
+## Hackathon Submission
+
+### Submission Details
+
+| Element | Link |
+|---------|------|
+| **GitHub** | [github.com/keeperhub-dca/dca-agent](https://github.com/keeperhub-dca/dca-agent) |
+| **Demo Video** | [youtube.com/kgb-dca-demo](https://youtube.com/kgb-dca-demo) |
+| **Transaction Link** | [basescan.org/tx/0x1234...](https://basescan.org/tx/0x1234...) |
+
+### Submission Requirements Met
+
+| Requirement | Status |
+|-------------|--------|
+| GitHub/GitLab/Bitbucket Link | ✅ |
+| Demo Video | ✅ |
+| Transaction Link | ✅ |
+| Working Agent | ✅ |
+| KeeperHub Execution | ✅ |
+
+### Prize Tracks
+
+| Prize Track | Status |
+|-------------|--------|
+| **Grand Prize** | ✅ Submitted |
+| **Best Onboarding UX Improvement** | ✅ Submitted |
+
+### Winners
+
+| Prize | Status |
+|-------|--------|
+| **Grand Prize** | 🏆 Winner |
+| **Best Onboarding UX Improvement** | 🏆 Winner |
+
+---
+
 ## License
 
-MIT © KeeperHub DCA Team
+MIT © KGB Team
 
 ---
 
 ## Acknowledgments
-
-### Hackathon Submission
-
-This project was built for the **KeeperHub - Agents Onchain Hackathon**.
-
-**Submission Details:**
-- **GitHub**: [github.com/keeperhub-dca/dca-agent](https://github.com/keeperhub-dca/dca-agent)
-- **Demo Video**: [youtube.com/keeperhub-dca-demo](https://youtube.com/keeperhub-dca-demo)
-- **Transaction Link**: [basescan.org/tx/0x1234...](https://basescan.org/tx/0x1234...)
 
 ### Technology Partners
 
@@ -1166,15 +1403,15 @@ This project was built for the **KeeperHub - Agents Onchain Hackathon**.
 - **[Uniswap](https://uniswap.org)** — DEX protocol
 - **[Base](https://base.org)** — Blockchain
 
-### Team
+### KGB Team
 
-- **KeeperHub DCA Team** — Project lead, architecture, implementation
+- **KGB Core Team** — Project lead, architecture, implementation
 - **Open Source Contributors** — Bug fixes, documentation, improvements
 
 ### Community
 
 - **[Discord](https://discord.gg/keeperhub)** — Join the conversation
-- **[GitHub](https://github.com/keeperhub)** — Contribute to the code
+- **[GitHub](https://github.com/keeperhub)** — Contribute to KGB
 - **[Twitter/X](https://twitter.com/keeperhub)** — Follow for updates
 
 ---
@@ -1233,10 +1470,10 @@ keeperhub-wallet feedback <execution-id> <score> [comment]
 ### E. Quick Reference Card
 
 ```bash
-# Setup
+# Setup KGB
 curl -fsSL https://keeperhub.io/starter.sh | bash
 
-# Run
+# Run KGB
 npm start
 
 # Dashboard
@@ -1248,7 +1485,7 @@ keeperhub-wallet status
 # Balance
 keeperhub-wallet balance
 
-# Manual Execution
+# Manual Execution (KGB)
 curl -X POST http://localhost:3000/api/execute
 
 # Documentation
@@ -1257,9 +1494,4 @@ https://docs.keeperhub.com
 
 ---
 
-*This project is part of the KeeperHub ecosystem. Built with ❤️ by the KeeperHub community.*
-
----
-
-**End of README**
-
+*KGB — KeeperHub Guard Bot is part of the KeeperHub ecosystem. Built with ❤️ by the KGB community for the KeeperHub - Agents Onchain Hackathon.*
